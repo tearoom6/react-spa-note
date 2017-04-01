@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default class NoteList extends React.Component {
   // 子要素のレンダリング
@@ -11,9 +12,11 @@ export default class NoteList extends React.Component {
     }
 
     return <li className={classNames.join(' ')} key={note.id}>
-      <span className="NoteList-title">{note.title}</span>
-      <span className="NoteList-updated">{note.updated}</span>
-    </li>;
+      <Link to={`/notes/${note.id}/edit`}>
+        <span className="NoteList-title">{note.title}</span>
+        <span className="NoteList-updated">{note.updated}</span>
+      </Link>
+    </li>
   }
 
   // notesを親から受け取ってリストを返す

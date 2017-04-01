@@ -1,6 +1,7 @@
 import React from 'react'
 import StarButton from '../StarButton/StarButton'
 import Button from '../Button/Button'
+import { browserHistory } from 'react-router'
 
 export default class NoteHeader extends React.Component {
   isOwn() {
@@ -8,6 +9,7 @@ export default class NoteHeader extends React.Component {
   }
 
   handleClickEdit() {
+    browserHistory.push(`/notes/${this.props.note.id}/edit`)
   }
 
   handleClickDelete() {

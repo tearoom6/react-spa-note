@@ -4,7 +4,6 @@ import NoteAction from '../../actions/NoteAction'
 import Button from '../../components/Button/Button'
 import dashboardStore from '../../stores/dashboardStore'
 import NoteList from '../../components/NoteList/NoteList'
-import NoteEdit from './NoteEdit/NoteEdit'
 
 class Dashboard extends React.Component {
   static getStores() {
@@ -15,23 +14,29 @@ class Dashboard extends React.Component {
     return dashboardStore.getState()
   }
 
-  render() {
-    const { notes, selectedNoteId } = this.state
-    const selectedNote = notes.find(note => {
-      return selectedNoteId === note.id
-    })
+  componentDidMount() {
+    NoteAction.fetchMyNotes()
+  }
 
+  handleClickNew() {
+    NoteAction.create()
+  }
+
+  render() {
+    const note = this.state.notes.find(note => note.id === Number(this.props.params.id))
     return <div className="page-Dashboard">
       <div className="page-Dashboard-list">
         <div className="page-Dashboard-listHeader">
-          <Button onClick={NoteAction.create}>
+          <Button onClick={() => this.handleClickNew()}>
             New Note
           </Button>
         </div>
-        <NoteList notes={notes} selectedNoteId={selectedNoteId} />
+        <div role="navigation">
+          <NoteList notes={this.state.notes} selectedNoteId={this.props.params.id} />
+        </div>
       </div>
-      <div className="page-Dashboard-main">
-        <NoteEdit note={selectedNote} />
+      <div className="page-Dashboard-main" role="form">
+        {this.props.children ? React.cloneElement(this.props.children, { note: note }) : null}
       </div>
     </div>
   }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import NoteAction from '../../../actions/NoteAction'
 import Button from '../../../components/Button/Button'
 import NoteBody from '../../../components/NoteBody/NoteBody'
@@ -26,6 +27,7 @@ export default class NoteEdit extends React.Component {
   }
 
   handleShow() {
+    browserHistory.push(`/notes/${this.state.note.id}`)
   }
 
   onChangeTitle(e) {
