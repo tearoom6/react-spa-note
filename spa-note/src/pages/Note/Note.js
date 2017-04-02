@@ -4,19 +4,23 @@ import NoteHeader from '../../components/NoteHeader/NoteHeader'
 import NoteBody from '../../components/NoteBody/NoteBody'
 import NoteAction from '../../actions/NoteAction'
 import StarAction from '../../actions/StarAction'
-import noteStore from '../../stores/noteStore'
+import { getStores, getState } from '../../stores'
 
 class Note extends React.Component {
   static getStores() {
-    return [noteStore]
+    return getStores(['noteStore'])
   }
 
   static calculateState() {
-    return noteStore.getState()
+    return getState('noteStore')
+  }
+
+  static prefetch(props) {
+    return NoteAction.fetch(Number(props.params.id))
   }
 
   componentDidMount() {
-    NoteAction.fetch(Number(this.props.params.id))
+    Note.prefetch(this.props)
   }
 
   handleChangeStar(starred) {

@@ -38,4 +38,9 @@ export default {
       dispatch({ type: 'note/delete', id })
     })
   },
+
+  rehydrate(state) {
+    dispatch({ type: 'note/rehydrate', state: state.noteStore })
+    dispatch({ type: 'note/rehydrate/my', state: state.dashboardStore })
+  },
 }

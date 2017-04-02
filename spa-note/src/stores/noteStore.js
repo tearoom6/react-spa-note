@@ -1,7 +1,6 @@
 import { ReduceStore } from 'flux/utils'
-import dispatcher from '../dispatcher'
 
-class NoteStore extends ReduceStore {
+export default class NoteStore extends ReduceStore {
   getInitialState() {
     return { note: null }
   }
@@ -26,10 +25,10 @@ class NoteStore extends ReduceStore {
         else {
           return state
         }
+      case 'note/rehydrate':
+        return action.state
       default:
         return state
     }
   }
 }
-
-export default new NoteStore(dispatcher)

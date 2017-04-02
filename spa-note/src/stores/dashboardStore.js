@@ -1,7 +1,6 @@
 import { ReduceStore } from 'flux/utils'
-import dispatcher from '../dispatcher'
 
-class DashboardStore extends ReduceStore {
+export default class DashboardStore extends ReduceStore {
   getInitialState() {
     return { notes: [] }
   }
@@ -26,10 +25,10 @@ class DashboardStore extends ReduceStore {
         return Object.assign({}, state, {
           notes: state.notes.filter(note => note.id !== action.id),
         })
+      case 'note/rehydrate/my':
+        return action.state
       default:
         return state
     }
   }
 }
-
-export default new DashboardStore(dispatcher)

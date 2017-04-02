@@ -1,20 +1,24 @@
 import React from 'react'
 import { Container } from 'flux/utils'
 import NoteAction from '../../actions/NoteAction'
-import starredNotesStore from '../../stores/starredNotesStore'
+import { getStores, getState } from '../../stores'
 import StarredNoteList from '../../components/StarredNoteList/StarredNoteList'
 
 class Starred extends React.Component {
   static getStores() {
-    return [starredNotesStore]
+    return getStores(['starredNotesStore'])
   }
 
   static calculateState() {
-    return starredNotesStore.getState()
+    return getState('starredNotesStore')
+  }
+
+  static prefetch() {
+    return NoteAction.fetchStarred()
   }
 
   componentDidMount() {
-    NoteAction.fetchStarred()
+    Starred.prefetch()
   }
 
   render() {

@@ -13,4 +13,8 @@ export default {
       dispatch({ type: 'star/delete', noteId })
     })
   },
+
+  rehydrate(state) {
+    dispatch({ type: 'star/rehydrate', state: state.starredNotesStore })
+  },
 }

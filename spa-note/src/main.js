@@ -1,20 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, browserHistory } from 'react-router'
-import App from './pages/App/App'
-import Dashboard from './pages/Dashboard/Dashboard'
-import Note from './pages/Note/Note'
-import NoteEdit from './pages/Dashboard/NoteEdit/NoteEdit'
-import Starred from './pages/Starred/Starred'
+import { Router, match, browserHistory } from 'react-router'
+import getRoutes from './routes'
+import { createDispatcher } from './dispatcher'
+import { rehydrateState } from './actions'
+import { createStores } from './stores'
 
-ReactDOM.render((
-  <Router history={browserHistory}>
-    <Route component={App}>
-      <Route path="/" component={Dashboard}>
-        <Route path="notes/:id/edit" component={NoteEdit} />
-      </Route>
-      <Route path="notes/:id" component={Note} />
-      <Route path="starred" component={Starred} />
-    </Route>
-  </Router>
-), document.getElementById('app'))
+const dispatcher = createDispatcher()
+createStores(dispatcher)
+
+const routes = getRoutes()
+const mountNode = document.getElementById('app')
+const initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data-json'))
+rehydrateState(initialData)
+
+match( { history: browserHistory, routes }, ( error, redirectLocation, renderProps ) => {
+  ReactDOM.render(<Router {...renderProps} />, mountNode)
+})

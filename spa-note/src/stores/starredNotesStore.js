@@ -1,7 +1,6 @@
 import { ReduceStore } from 'flux/utils'
-import dispatcher from '../dispatcher'
 
-class StarredNotesStore extends ReduceStore {
+export default class StarredNotesStore extends ReduceStore {
   getInitialState() {
     return { notes: [] }
   }
@@ -10,10 +9,10 @@ class StarredNotesStore extends ReduceStore {
     switch (action.type) {
       case 'note/fetch/starred':
         return { notes: action.notes }
+      case 'star/rehydrate':
+        return action.state
       default:
         return state
     }
   }
 }
-
-export default new StarredNotesStore(dispatcher)

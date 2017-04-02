@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "npm-run-all --parallel dev-server ssr-server",
+    "dev-server": "webpack-dev-server",
+    "ssr-server": "node --require ./src/hook/babel-register.js src/server.js",
     "build": "webpack"
   },
   "keywords": [],
@@ -12,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
+    "express": "^4.15.2",
     "flux": "^3.1.2",
     "marked": "^0.3.6",
     "react": "^15.4.2",
@@ -23,10 +26,12 @@
     "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.23.0",
+    "babel-register": "^6.24.0",
     "css-loader": "^0.27.3",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
     "extract-text-webpack-plugin": "^2.1.0",
+    "npm-run-all": "^4.0.2",
     "postcss-easy-import": "^2.0.0",
     "postcss-loader": "^1.3.3",
     "webpack": "^2.3.2",
